@@ -16,13 +16,14 @@ int main(int argc, char *argv[]) // args passes on program launch (program.exe -
 	Operators();
 	ConditionalsAndLoops();
 	StaticArrays();
-	Functions();
-	PointersAndMemoryAllocation();
+	Pointers();
+	MemoryAllocation();
 	DynamicArrays();
 	Strings();
+	Functions();
+	Scope();
 	Enums();
 	Structs();
-	Scope();
 
 	randomArray();
 

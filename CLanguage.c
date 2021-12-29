@@ -63,14 +63,16 @@ void Operators()
 	a++; a--; // (a), a = a + 1
 	++a; --a; // (a + 1), a = a + 1
 	!a; // a = a ? false : true
-	&a; // get address of var
 	*ptr; // get var from pointer address
+	&a; // get address of var - *ptr = &a;
 
 	// Binary
 	a + b; a - b; a* b; a / b; a% b; // arithmetic
 	a = b; a += b; a -= b; a *= b; a /= b; a %= b; // assignment
+	*ptr = &a; // address asignment
 	a < b; a > b; a <= b; a >= b; a == b; a != b; // comparative
 	a&& b; a || b; // logical
+	*(ptr + i); // pointer arithmetic - same as ptr[i];
 
 	// Ternary
 	a ? a : b; // if a is true, then return a, otherwise return b
@@ -137,7 +139,7 @@ void ConditionalsAndLoops()
 void StaticArrays()
 {
 	// Static Arrays - unmutable size
-	int myArrWithInit[4] = { 1, 2, 3, 4 }; // arr declaration - type name[const size] = {values}
+	int myArrWithInit[] = { 1, 2, 3, 4 }; // arr declaration - type name[const size] = {values}
 
 	int myStaticArray[ARR_COLS];
 
@@ -208,7 +210,32 @@ void StaticArrays()
 	}
 }
 
-void PointersAndMemoryAllocation()
+void Pointers()
+{
+	// Pointers
+	int* myPointer; // store address
+	int* myPtrWithInit = &a; // init accept only addresses
+	int* myPtrWithInitNull = NULL;
+
+	myPointer = &a; // set address of var
+	(myPointer); // get address of pointer
+
+	*myPointer = 3; // set value to var from pointer address
+	(*myPointer); // get var from pointer address
+
+	// PointersArithmetic
+	int* myDynamicArr = calloc(ARR_COLS, sizeof(int)); // int myArr[ARR_COLS];
+
+	for (int i = 0, n = 1; i < ARR_COLS; i++, n++)
+		*(myDynamicArr + i) = n; // myArr[i] = n;
+
+	printf("My Dynamic Arr\n");
+	for (int i = 0; i < ARR_COLS; i++)
+		printf("%d\t", *(myDynamicArr + i)); // printf("%d\t", myArr[i]);
+	printf("\n\n");
+}
+
+void MemoryAllocation()
 {
 	// Pointers
 	{
@@ -314,36 +341,62 @@ void Strings()
 
 }
 
-void Enums()
-{
+/*************/
+/* Functions */
+/*************/
 
+int myFunction(int, int); // func prototype - type name(args) // use for func available
+
+void Functions() {
+	int myFuncRes = myFunction(a, b); // call func - name(args)
 }
 
-void Structs()
-{
-
-}
-
-void Functions() {}
-
-int myFunction(int, int); // function prototype - type name(args)
-
-int myFunction(int arg1, int arg2) // function implementation - type name(args) {return type}
+int myFunction(int arg1, int arg2) // func implementation - type name(args) {return type}
 {
 	int myFuncVar = arg1 + arg2;
-	return myFuncVar;
+	return myFuncVar; // returns if type not void
 }
 
-void Scope() {}
+/*********/
+/* Scope */
+/*********/
 
 // Global scope - var available everywhere
 int myGlobalVar;
 
-void myFuncLocalScope()
+void Scope()
 {
 	// Local scope - var available only between brackets
 	int myFuncLocalVar;
 	{
 		int mylocalVar;
 	}
+}
+
+void Enums()
+{
+	enum MyEnum
+	{
+		Val,
+		Val2,
+		Val3
+	};
+}
+
+void Structs()
+{
+	// struct declaration - struct name {type fields} // final size rel to struct fields
+	struct MyStruct 
+	{
+		int structPropA;
+		float structPropB;
+		char* structPropC;
+		BOOL structPropD;
+	};
+
+	// struct exam declaring with init - struct type name = {values}
+	struct MyStruct myStructExamWithInit = {1, 2, "string", TRUE};
+
+	myStructExamWithInit.structPropA; // get value of struct field
+	myStructExamWithInit.structPropA = 3; // set value to struct field
 }
