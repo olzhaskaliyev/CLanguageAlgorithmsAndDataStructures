@@ -25,7 +25,5 @@ int main(int argc, char *argv[]) // args passes on program launch (program.exe -
 	Enums();
 	Structs();
 
-	randomArray();
-
 	return 0; // required, because in several compilers throw error
 }

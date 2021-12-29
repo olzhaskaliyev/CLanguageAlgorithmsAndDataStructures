@@ -25,8 +25,8 @@ void VariablesAndConstants()
 	int myVarWithInitializing = 1;
 
 	// Constants
-	const int MY_CONSTANT = 1; // const type NAME = value (init is required)
-	#define MY_DEFINED_CONST 1 // define const
+	const int MY_CONSTANT = 1; // const declaration - const type NAME = value (init is required)
+	#define MY_DEFINED_CONST 1 // const declaration with define - #define NAME value
 }
 
 void DataTypes()
@@ -212,18 +212,49 @@ void StaticArrays()
 
 void Pointers()
 {
-	// Pointers
-	int* myPointer; // store address
-	int* myPtrWithInit = &a; // init accept only addresses
-	int* myPtrWithInitNull = NULL;
+	// * Pointers store only addresses
+	int* myPointer = NULL; // pointer declaration - type * name = address (NULL - nullptr - null address)
+	printf("myPointer size = %lld bytes\n", sizeof(myPointer)); // 8 bytes
 
-	myPointer = &a; // set address of var
-	(myPointer); // get address of pointer
+	// & Links
+	printf("myPointer value (address) = %p\n", myPointer); // %p - string format
+	myPointer = &a; // &a - get address of var
+	printf("myPointer new value (address) = %p\n", myPointer);
 
-	*myPointer = 3; // set value to var from pointer address
-	(*myPointer); // get var from pointer address
+	// *Dereference
+	*myPointer; // *ptr - dereference - get var from pointer address
+	printf("value of var from myPointer = %d\n", *myPointer);
 
-	// PointersArithmetic
+	*myPointer = 3; // set val to var from pointer address
+	printf("new value of var from myPointer = %d\n", *myPointer);
+	printf("value of var a = %d\n", a);
+
+	// Pointers arithmetic
+	*(ptr + i); // same as ptr[i]
+	printf("value of memory block next to myPointer = %d\n\n", *(ptr + i));
+}
+
+void MemoryAllocation()
+{
+	// Malloc - allocate memory
+	int* myPtr = malloc(sizeof(int)); // malloc(size in bytes) // returns address of allocated memory 
+	printf("myPtr size = %lld bytes\n", sizeof(myPtr));
+	printf("myPtr value (address) = %p\n", myPtr);
+	printf("value of var from myPtr = %d\n\n", *myPtr);
+
+	// Calloc - allocate memory N times
+	int* myDynamicArr = calloc(ARR_COLS, sizeof(int));
+
+	// Realloc - re-allocate memory
+	myDynamicArr = realloc(myDynamicArr, sizeof(int) * 3); // allocate new memory block and return address
+
+	// Free - free memory to prevent memory leak
+	free(myPtr);
+	free(myDynamicArr);
+}
+
+void DynamicArrays()
+{
 	int* myDynamicArr = calloc(ARR_COLS, sizeof(int)); // int myArr[ARR_COLS];
 
 	for (int i = 0, n = 1; i < ARR_COLS; i++, n++)
@@ -233,91 +264,34 @@ void Pointers()
 	for (int i = 0; i < ARR_COLS; i++)
 		printf("%d\t", *(myDynamicArr + i)); // printf("%d\t", myArr[i]);
 	printf("\n\n");
-}
 
-void MemoryAllocation()
-{
-	// Pointers
-	{
-		int* myPointer; // store address
-		int* myPtrWithInit = &a; // init accept only addresses
-		int* myPtrWithInitNull = NULL;
-
-		myPointer = &a; // set address of var
-		(myPointer); // get address of pointer
-
-		*myPointer = 3; // set value to var from pointer address
-		(*myPointer); // get var from pointer address
-	}
-
-	// MemoryAllocation
-	{
-		// Malloc - allocate memory
-		int* myPointer = malloc(sizeof(int)); // malloc(size in bytes) // returns address of allocated memory 
-
-		// Calloc - allocate memory N times
-		int* myDynamicArr = calloc(ARR_COLS, sizeof(int));
-
-		// Realloc - re-allocate memory
-		myDynamicArr = realloc(myDynamicArr, sizeof(int) * 3);
-
-		// Free - free memory to prevent memory leak
-		free(myPointer);
-		free(myDynamicArr);
-	}
-
-	// PointersArithmetic
-	{
-		int* myDynamicArr = calloc(ARR_COLS, sizeof(int)); // int myArr[ARR_COLS];
-
-		for (int i = 0, n = 1; i < ARR_COLS; i++, n++)
-			*(myDynamicArr + i) = n; // myArr[i] = n;
-
-		printf("My Dynamic Arr\n");
-		for (int i = 0; i < ARR_COLS; i++)
-			printf("%d\t", *(myDynamicArr + i)); // printf("%d\t", myArr[i]);
-		printf("\n\n");
-
-		free(myDynamicArr);
-	}
-}
-
-void DynamicArrays()
-{
-	int userArrPages, userArrRows, userArrCols;
-
-	printf("Enter arr pages: ");
-	scanf_s("%d", &userArrPages);
-	printf("Enter arr rows: ");
-	scanf_s("%d", &userArrRows);
-	printf("Enter arr cols: ");
-	scanf_s("%d", &userArrCols);
+	free(myDynamicArr);
 
 	// In dynamic array, you need first allocate memory for each nested arr
-	int*** my3DDynamicArr = calloc(userArrPages, sizeof(int**));
+	int*** my3DDynamicArr = calloc(ARR_PAGES, sizeof(int**));
 
-	for (int page = 0; page < userArrPages; page++)
-		my3DDynamicArr[page] = calloc(userArrRows, sizeof(int*));
+	for (int page = 0; page < ARR_PAGES; page++)
+		*(my3DDynamicArr + page) = calloc(ARR_ROWS, sizeof(int*));
 
-	for (int page = 0; page < userArrPages; page++)
-		for (int row = 0; row < userArrRows; row++)
-			my3DDynamicArr[page][row] = calloc(userArrCols, sizeof(int));
+	for (int page = 0; page < ARR_PAGES; page++)
+		for (int row = 0; row < ARR_ROWS; row++)
+			*((my3DDynamicArr + page) + row) = calloc(ARR_COLS, sizeof(int));
 
 	// Fill array
 	int n = 1;
-	for (int page = 0; page < userArrPages; page++)
-		for (int row = 0; row < userArrRows; row++)
-			for (int col = 0; col < userArrCols; col++, n++)
-				my3DDynamicArr[page][row][col] = n;
+	for (int page = 0; page < ARR_PAGES; page++)
+		for (int row = 0; row < ARR_ROWS; row++)
+			for (int col = 0; col < ARR_COLS; col++, n++)
+				*(((my3DDynamicArr + page) + row) + col) = n;
 
 	// Print array
-	for (int page = 0; page < userArrPages; page++)
+	for (int page = 0; page < ARR_PAGES; page++)
 	{
-		for (int row = 0; row < userArrRows; row++)
+		for (int row = 0; row < ARR_ROWS; row++)
 		{
-			for (int col = 0; col < userArrCols; col++, n++)
+			for (int col = 0; col < ARR_COLS; col++, n++)
 			{
-				printf("%d\t", my3DDynamicArr[page][row][col]);
+				printf("%d\t", *(((my3DDynamicArr + page) + row) + col));
 			}
 			printf("\n");
 		}
@@ -326,12 +300,12 @@ void DynamicArrays()
 	printf("\n");
 
 	// In dynamic array, you need free each nested arr
-	for (int page = 0; page < userArrPages; page++)
-		for (int row = 0; row < userArrRows; row++)
-			free(my3DDynamicArr[page][row]);
+	for (int page = 0; page < ARR_PAGES; page++)
+		for (int row = 0; row < ARR_ROWS; row++)
+			free(*((my3DDynamicArr + page) + row));
 
-	for (int page = 0; page < userArrPages; page++)
-		free(my3DDynamicArr[page]);
+	for (int page = 0; page < ARR_PAGES; page++)
+		free(*(my3DDynamicArr + page));
 
 	free(my3DDynamicArr);
 }
