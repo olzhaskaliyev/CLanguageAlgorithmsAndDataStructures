@@ -10,18 +10,30 @@ int main(int argc, char *argv[]) // args passes on program launch (program.exe -
 	
 	// C Language
 	VariablesAndConstants();
+	Scope();
 	DataTypes();
 	Operators();
 	ConditionalsAndLoops();
+	Functions();
 	StaticArrays();
 	Pointers();
 	MemoryAllocation();
 	DynamicArrays();
-	Strings();
-	Functions();
-	Scope();
-	Enums();
-	Structs();
+	// Strings();
+	// Enums();
+	// Structs();
+	// Unions();
+
+	// Data Structures
+	// List();
+	// Stack();
+	// Queue();
+	// Heap();
+	// Tree();
+	
+	// Algorithms
+	// Sort();
+	// Search();
 
 	return 0; // required, because in several compilers throw error
 }

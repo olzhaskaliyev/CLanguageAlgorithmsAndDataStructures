@@ -29,6 +29,18 @@ void VariablesAndConstants()
 	#define MY_DEFINED_CONST 1 // const declaration with define - #define NAME value
 }
 
+// Global scope - var available everywhere
+int myGlobalVar;
+
+void Scope()
+{
+	// Local scope - var available only between brackets
+	int myFuncLocalVar;
+	{
+		int mylocalVar;
+	}
+}
+
 void DataTypes()
 {
 	// Char - 1 byte
@@ -143,6 +155,18 @@ void ConditionalsAndLoops()
 			statement; // exam - printf("%d\n", i) // var i available in body
 		}
 	}
+}
+
+int myFunction(int, int); // func prototype - type name(args) // use for func available
+
+void Functions() {
+	int myFuncRes = myFunction(a, b); // call func - name(args)
+}
+
+int myFunction(int arg1, int arg2) // func implementation - type name(args) {return type}
+{
+	int myFuncVar = arg1 + arg2;
+	return myFuncVar; // returns if type not void
 }
 
 void StaticArrays()
@@ -337,38 +361,6 @@ void Strings()
 
 }
 
-/*************/
-/* Functions */
-/*************/
-
-int myFunction(int, int); // func prototype - type name(args) // use for func available
-
-void Functions() {
-	int myFuncRes = myFunction(a, b); // call func - name(args)
-}
-
-int myFunction(int arg1, int arg2) // func implementation - type name(args) {return type}
-{
-	int myFuncVar = arg1 + arg2;
-	return myFuncVar; // returns if type not void
-}
-
-/*********/
-/* Scope */
-/*********/
-
-// Global scope - var available everywhere
-int myGlobalVar;
-
-void Scope()
-{
-	// Local scope - var available only between brackets
-	int myFuncLocalVar;
-	{
-		int mylocalVar;
-	}
-}
-
 void Enums()
 {
 	enum MyEnum
@@ -395,4 +387,8 @@ void Structs()
 
 	myStructExamWithInit.structPropA; // get value of struct field
 	myStructExamWithInit.structPropA = 3; // set value to struct field
+}
+
+void Union()
+{
 }
