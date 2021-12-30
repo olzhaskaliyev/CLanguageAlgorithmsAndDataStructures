@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "Utilities.h"
 
 void fillArray(float* arr, int arrSize)
 {

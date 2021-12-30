@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 #include "CLanguage.h"
-#include "Utilities.h"
-#include "Programs.h"
 
 // Main program execution function
 int main(int argc, char *argv[]) // args passes on program launch (program.exe -argc=argv)

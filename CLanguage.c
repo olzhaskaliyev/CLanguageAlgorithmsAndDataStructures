@@ -4,7 +4,7 @@
 
 // Includes
 #include <limits.h> // libraries includes with <>
-#include "CLangUtils.h" // user files includes with ""
+#include "Utilities.h" // user files includes with ""
 
 // Standard Libraries
 #include <stdio.h> // core input and output functions
@@ -13,7 +13,7 @@
 #include <string.h> // string handling functions
 #include <math.h> // common mathematical functions
 
-// Defines - on compiling, preprocessor will replace keywords with expressions in code below
+// Defines - on compiling, preprocessor will replace keyword to code
 #define BOOL char
 #define TRUE 1
 #define FALSE 0
@@ -55,24 +55,23 @@ void DataTypes()
 	float myFloat = 1.1; // 4 bytes / %f
 	double myDoubleFloat = 1.1; // 8 bytes / %lf
 	long double myLongDoubleFloat = 1.1; // 16 bytes / %Lf
+
+	// Types cast
+	int a = (float)1.2; // (type to cast)val
 }
 
 void Operators()
 {
 	// Unary
-	a++; a--; // (a), a = a + 1
-	++a; --a; // (a + 1), a = a + 1
+	a++; a--; // (a), a = a + 1 (postfix increment and decrement)
+	++a; --a; // (a + 1), a = a + 1 (prefix increment and decrement)
 	!a; // a = a ? false : true
-	*ptr; // get var from pointer address
-	&a; // get address of var - *ptr = &a;
 
 	// Binary
 	a + b; a - b; a* b; a / b; a% b; // arithmetic
 	a = b; a += b; a -= b; a *= b; a /= b; a %= b; // assignment
-	*ptr = &a; // address asignment
 	a < b; a > b; a <= b; a >= b; a == b; a != b; // comparative
 	a&& b; a || b; // logical
-	*(ptr + i); // pointer arithmetic - same as ptr[i];
 
 	// Ternary
 	a ? a : b; // if a is true, then return a, otherwise return b
@@ -93,9 +92,13 @@ void ConditionalsAndLoops()
 		{
 			statementA;
 		}
-		else
+		else if (condition) // optional
 		{
 			statementB;
+		}
+		else // optional
+		{
+			statement;
 		}
 
 		// Switch
@@ -103,10 +106,10 @@ void ConditionalsAndLoops()
 		{
 		case expressionResA:
 			statementA;
-			break;
+			break; // break continiously code
 		case expressionResB:
 			statementB;
-			break;
+			// without break next case will execute
 		default:
 			statement;
 			break;
@@ -116,22 +119,28 @@ void ConditionalsAndLoops()
 	// Loops
 	{
 		// While
-		while (condition)
+		while (condition) // while (true) - infinite loop
 		{
 			statement;
+			if (condition) {
+				break; // break loop
+			}
+			if (condition)
+			{
+				continue; // skip current iteration
+			}
 		}
 
 		// Do while
 		do
 		{
-			statement;
+			statement; // executes once, then check condition for continiously executions
 		} while (condition);
 
 		// For
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 10; i++) // for (inits; conditions; iterations) // for (;;;) - infinite loop
 		{
-			statement;
-			// printf("%d\n", i);
+			statement; // exam - printf("%d\n", i) // var i available in body
 		}
 	}
 }
@@ -189,8 +198,7 @@ void StaticArrays()
 
 	int my3DArr[ARR_PAGES][ARR_ROWS][ARR_COLS];
 
-	int n = 1;
-	for (int page = 0; page < ARR_PAGES; page++)
+	for (int page = 0, n = 1; page < ARR_PAGES; page++)
 		for (int row = 0; row < ARR_ROWS; row++)
 			for (int col = 0; col < ARR_COLS; col++, n++)
 				my3DArr[page][row][col] = n;
@@ -237,20 +245,30 @@ void Pointers()
 void MemoryAllocation()
 {
 	// Malloc - allocate memory
-	int* myPtr = malloc(sizeof(int)); // malloc(size in bytes) // returns address of allocated memory 
-	printf("myPtr size = %lld bytes\n", sizeof(myPtr));
+	int* myPtr = malloc(sizeof(int)); // malloc(size in bytes) // returns address of allocated memory or NULL
+
+	*myPtr = 2;
 	printf("myPtr value (address) = %p\n", myPtr);
 	printf("value of var from myPtr = %d\n\n", *myPtr);
 
 	// Calloc - allocate memory N times
 	int* myDynamicArr = calloc(ARR_COLS, sizeof(int));
 
+	myDynamicArr[ARR_COLS - 1] = 2;
+	printf("myDynamicArr value (address) = %p\n", myDynamicArr);
+	printf("value of var from myDynamicArr[ARR_COLS - 1] = %d\n\n", *(myDynamicArr + (ARR_COLS - 1)));
+
 	// Realloc - re-allocate memory
 	myDynamicArr = realloc(myDynamicArr, sizeof(int) * 3); // allocate new memory block and return address
+
+	printf("myDynamicArr value (address) after realloc = %p\n", myDynamicArr);
+	printf("value of var from myDynamicArr[ARR_COLS - 1] after realloc = %d\n\n", myDynamicArr[ARR_COLS - 1]);
 
 	// Free - free memory to prevent memory leak
 	free(myPtr);
 	free(myDynamicArr);
+
+	printf("value of var from myPtr after free = %d\n\n", *myPtr);
 }
 
 void DynamicArrays()
@@ -267,47 +285,51 @@ void DynamicArrays()
 
 	free(myDynamicArr);
 
-	// In dynamic array, you need first allocate memory for each nested arr
-	int*** my3DDynamicArr = calloc(ARR_PAGES, sizeof(int**));
-
-	for (int page = 0; page < ARR_PAGES; page++)
-		*(my3DDynamicArr + page) = calloc(ARR_ROWS, sizeof(int*));
-
-	for (int page = 0; page < ARR_PAGES; page++)
-		for (int row = 0; row < ARR_ROWS; row++)
-			*((my3DDynamicArr + page) + row) = calloc(ARR_COLS, sizeof(int));
-
-	// Fill array
-	int n = 1;
-	for (int page = 0; page < ARR_PAGES; page++)
-		for (int row = 0; row < ARR_ROWS; row++)
-			for (int col = 0; col < ARR_COLS; col++, n++)
-				*(((my3DDynamicArr + page) + row) + col) = n;
-
-	// Print array
-	for (int page = 0; page < ARR_PAGES; page++)
+	// Multidimentional Dynamic Arrays
 	{
-		for (int row = 0; row < ARR_ROWS; row++)
+		// In dynamic array, you need first allocate memory for each nested arr
+		int*** my3DDynamicArr = calloc(ARR_PAGES, sizeof(int**));
+
+		for (int page = 0; page < ARR_PAGES; page++)
+			*(my3DDynamicArr + page) = calloc(ARR_ROWS, sizeof(int*));
+
+		for (int page = 0; page < ARR_PAGES; page++)
+			for (int row = 0; row < ARR_ROWS; row++)
+				*(*(my3DDynamicArr + page) + row) = calloc(ARR_COLS, sizeof(int));
+
+		// Fill array
+		int n = 1;
+		for (int page = 0; page < ARR_PAGES; page++)
+			for (int row = 0; row < ARR_ROWS; row++)
+				for (int col = 0; col < ARR_COLS; col++, n++)
+					*(*(*(my3DDynamicArr + page) + row) + col) = n;
+
+		// Print array
+		printf("My Dynamic 3D Arr\n");
+		for (int page = 0; page < ARR_PAGES; page++)
 		{
-			for (int col = 0; col < ARR_COLS; col++, n++)
+			for (int row = 0; row < ARR_ROWS; row++)
 			{
-				printf("%d\t", *(((my3DDynamicArr + page) + row) + col));
+				for (int col = 0; col < ARR_COLS; col++, n++)
+				{
+					printf("%d\t", *(*(*(my3DDynamicArr + page) + row) + col));
+				}
+				printf("\n");
 			}
 			printf("\n");
 		}
 		printf("\n");
+
+		// In dynamic array, you need free each nested arr
+		for (int page = 0; page < ARR_PAGES; page++)
+			for (int row = 0; row < ARR_ROWS; row++)
+				free(*(*(my3DDynamicArr + page) + row));
+
+		for (int page = 0; page < ARR_PAGES; page++)
+			free(*(my3DDynamicArr + page));
+
+		free(my3DDynamicArr);
 	}
-	printf("\n");
-
-	// In dynamic array, you need free each nested arr
-	for (int page = 0; page < ARR_PAGES; page++)
-		for (int row = 0; row < ARR_ROWS; row++)
-			free(*((my3DDynamicArr + page) + row));
-
-	for (int page = 0; page < ARR_PAGES; page++)
-		free(*(my3DDynamicArr + page));
-
-	free(my3DDynamicArr);
 }
 
 void Strings()
