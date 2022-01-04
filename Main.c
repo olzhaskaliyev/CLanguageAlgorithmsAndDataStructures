@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "CLanguage.h"
+#include "Programs.h"
 
 // Main program execution function
 int main(int argc, char *argv[]) // args passes on program launch (program.exe -argc=argv)
@@ -9,20 +10,16 @@ int main(int argc, char *argv[]) // args passes on program launch (program.exe -
 	srand(time(NULL)); // set global random seed to current time
 	
 	// C Language
-	VariablesAndConstants();
-	Scope();
+	/*VariablesAndConstants();
 	DataTypes();
 	Operators();
 	ConditionalsAndLoops();
-	Functions();
 	StaticArrays();
 	Pointers();
 	MemoryAllocation();
 	DynamicArrays();
-	// Strings();
-	// Enums();
-	// Structs();
-	// Unions();
+	Functions();
+	Scope();*/
 
 	// Data Structures
 	// List();
@@ -34,6 +31,9 @@ int main(int argc, char *argv[]) // args passes on program launch (program.exe -
 	// Algorithms
 	// Sort();
 	// Search();
+
+	// Programs
+	userArray();
 
 	return 0; // required, because in several compilers throw error
 }

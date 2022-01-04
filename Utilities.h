@@ -1,9 +1,9 @@
 #pragma once
 
-int i = 0;
-int a = 1;
-int b = 2;
-int* ptr = &a;
+extern int i;
+extern int a;
+extern int b;
+extern int* ptr;
 #define expression (a + b)
 #define expressionResA (2)
 #define expressionResB (3)
@@ -15,12 +15,17 @@ int* ptr = &a;
 #define ARR_COLS 8
 #define ARR_PAGES 3
 
-void fillArray(float*, int);
-void fill2DArray(float**, int, int);
-void fill3DArray(float***, int, int, int);
+inline float getRandomNumber(float, float, int);
+long double inputNumber(char*);
+
+inline float* initArray(int);
+float** init2DArray(int, int);
+float*** init3DArray(int, int, int);
+void fillArrayRandomly(float*, int, float, float, int);
+void fill2DArrayRandomly(float**, int, int, float, float, int);
+void fill3DArrayRandomly(float***, int, int, int, float, float, int);
 void printArray(float*, int);
 void print2DArray(float**, int, int);
 void print3DArray(float***, int, int, int);
-
-float getRandomNumber(float, float, int);
-void fillArrayRandom(float*, int, float, float, int);
+void free2DArray(float**, int);
+void free3DArray(float***, int, int);

@@ -140,11 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CLanguage.c" />
+    <ClCompile Include="DataStructures.c" />
     <ClCompile Include="Main.c" />
+    <ClCompile Include="Programs.c" />
     <ClCompile Include="Utilities.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLanguage.h" />
+    <ClInclude Include="DataStructures.h" />
+    <ClInclude Include="Programs.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

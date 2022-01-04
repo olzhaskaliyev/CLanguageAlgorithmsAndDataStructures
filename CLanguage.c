@@ -29,18 +29,6 @@ void VariablesAndConstants()
 	#define MY_DEFINED_CONST 1 // const declaration with define - #define NAME value
 }
 
-// Global scope - var available everywhere
-int myGlobalVar;
-
-void Scope()
-{
-	// Local scope - var available only between brackets
-	int myFuncLocalVar;
-	{
-		int mylocalVar;
-	}
-}
-
 void DataTypes()
 {
 	// Char - 1 byte
@@ -68,8 +56,8 @@ void DataTypes()
 	double myDoubleFloat = 1.1; // 8 bytes / %lf
 	long double myLongDoubleFloat = 1.1; // 16 bytes / %Lf
 
-	// Types cast
-	int a = (float)1.2; // (type to cast)val
+	// Type cast
+	float a = (int)1.2; // (type to cast)val // a = 1.00
 }
 
 void Operators()
@@ -157,18 +145,6 @@ void ConditionalsAndLoops()
 	}
 }
 
-int myFunction(int, int); // func prototype - type name(args) // use for func available
-
-void Functions() {
-	int myFuncRes = myFunction(a, b); // call func - name(args)
-}
-
-int myFunction(int arg1, int arg2) // func implementation - type name(args) {return type}
-{
-	int myFuncVar = arg1 + arg2;
-	return myFuncVar; // returns if type not void
-}
-
 void StaticArrays()
 {
 	// Static Arrays - unmutable size
@@ -187,7 +163,7 @@ void StaticArrays()
 	printf("\n\n");
 
 	// Multidimentional arrays
-	int my2DArrWithInit[3][4] = { {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12} };
+	int my2DArrWithInit[][4] = { {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12} };
 
 	int my2DArr[ARR_ROWS][ARR_COLS];
 
@@ -206,7 +182,7 @@ void StaticArrays()
 	}
 	printf("\n");
 
-	int my3DArrWithInit[2][3][4] =
+	int my3DArrWithInit[][3][4] =
 	{
 		{
 			{1, 2, 3, 4},
@@ -342,7 +318,6 @@ void DynamicArrays()
 			}
 			printf("\n");
 		}
-		printf("\n");
 
 		// In dynamic array, you need free each nested arr
 		for (int page = 0; page < ARR_PAGES; page++)
@@ -356,39 +331,26 @@ void DynamicArrays()
 	}
 }
 
-void Strings()
-{
+int myFunction(int, int); // func prototype - type name(args) // use for func available
 
+void Functions() {
+	int myFuncRes = myFunction(a, b); // call func - name(args)
 }
 
-void Enums()
+int myFunction(int arg1, int arg2) // func implementation - type name(args) {return type}
 {
-	enum MyEnum
+	int myFuncVar = arg1 + arg2;
+	return myFuncVar; // returns if type not void
+}
+
+// Global scope - var available everywhere
+int myGlobalVar;
+
+void Scope()
+{
+	// Local scope - var available only between brackets
+	int myFuncLocalVar;
 	{
-		Val,
-		Val2,
-		Val3
-	};
-}
-
-void Structs()
-{
-	// struct declaration - struct name {type fields} // final size rel to struct fields
-	struct MyStruct 
-	{
-		int structPropA;
-		float structPropB;
-		char* structPropC;
-		BOOL structPropD;
-	};
-
-	// struct exam declaring with init - struct type name = {values}
-	struct MyStruct myStructExamWithInit = {1, 2, "string", TRUE};
-
-	myStructExamWithInit.structPropA; // get value of struct field
-	myStructExamWithInit.structPropA = 3; // set value to struct field
-}
-
-void Union()
-{
+		int mylocalVar;
+	}
 }
